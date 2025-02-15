@@ -33,7 +33,8 @@
 			"extensions": [
 				"ms-dotnettools.csharp",
 				"ms-mssql.mssql",
-				"ms-dotnettools.csdevkit"
+				"ms-dotnettools.csdevkit",
+				"mhutchie.git-graph"
 			]
 		}
 	},
