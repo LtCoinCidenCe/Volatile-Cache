@@ -55,12 +55,16 @@ class Program
 
     var newData = new Data() { ID = existingID, description = $"object{existingID}" };
     var cancelSource = new CancellationTokenSource();
-    var cancelTask = Task.Factory.StartNew(removeByID, existingID, cancelSource.Token);
+    var cancelTask = Task.Factory.StartNew(removeByID, existingID, cancelSource.Token);   // object = ulong, boxing gets a copy on heap
     return new Cache<Data>() { data = newData, cancel = cancelSource, removeTask = cancelTask };
   }
 
   async static Task removeByID(object? givenID)
   {
+    // var dr=(double)givenID;  // won't work, InvalidCastException
+    // var ar=(int)givenID;     // won't work either
+    // var ir=(long)givenID;    // still no.
+    // unboxing such a "value" type must get its origin type
 #pragma warning disable CS8605 // Unboxing a possibly null value.
     ulong idToBeDeleted = (ulong)givenID;
 #pragma warning restore CS8605 // Unboxing a possibly null value.
